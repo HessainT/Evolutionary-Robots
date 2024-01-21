@@ -1,7 +1,11 @@
 # Import pybullet
-import pybullet as py
+import pybullet as p
 
-pass
+# Create an object to handle and draw results to GUI
+physicsClient = p.connect(p.GUI)
+
+p.disconnect #Disconnect object
+
 
 
 
