@@ -27,6 +27,15 @@ class NEURAL_NETWORK:
         self.Print_Motor_Neuron_Values()
 
         print("")
+    
+    #Added by Hessain
+    def Update(self):
+        
+        for key in self.neurons:
+            if self.neurons[key].Is_Sensor_Neuron():
+                self.neurons[key].Update_Sensor_Neuron()
+            else:
+                self.neurons[key].Update_Hidden_Or_Motor_Neuron()
 
 # ---------------- Private methods --------------------------------------
 
@@ -99,3 +108,30 @@ class NEURAL_NETWORK:
                 self.neurons[neuronName].Print()
 
         print("")
+    
+    #Hessain addition
+    def Get_Neuron_Names(self):
+        
+        #Return key of the neuron dictinoary (aka. neuron name)
+        return self.neurons.keys()
+    
+    def Is_Motor_Neuron(self, neuronName):
+        #Check if neuron is "registered"
+        if neuronName in self.neurons:
+            #Check in neuron.py whether neuron is motor neuron
+            return self.neurons[neuronName].Is_Motor_Neuron()
+        return False
+    
+    def Get_Motor_Neurons_Joint(self, neuronName):
+        #Check if neuron is "registered"
+        if neuronName in self.neurons:
+            #Check in neuron.py whether neuron is motor neuron
+            return self.neurons[neuronName].Get_Joint_Name()
+        return 0
+    
+    def Get_Value_Of(self, neuronName):
+        #Check if neuron is "registered"
+        if neuronName in self.neurons:
+            #Check in neuron.py whether neuron is motor neuron
+            return self.neurons[neuronName].Get_Value()
+        return 0

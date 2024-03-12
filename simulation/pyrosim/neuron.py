@@ -41,7 +41,7 @@ class NEURON:
         return self.value
 
     def Is_Sensor_Neuron(self):
-
+        
         return self.type == c.SENSOR_NEURON
 
     def Is_Hidden_Neuron(self):
@@ -121,3 +121,10 @@ class NEURON:
     def Threshold(self):
 
         self.value = math.tanh(self.value)
+        
+    #Hessain Addition
+    def Update_Sensor_Neuron(self):
+        self.Set_Value(pyrosim.Get_Touch_Sensor_Value_For_Link(self.Get_Link_Name()))
+        
+    def Update_Hidden_Or_Motor_Neuron(self):
+        self.Set_Value(0)
