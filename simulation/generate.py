@@ -8,6 +8,7 @@ Created on Mon Jan 29 17:30:04 2024
 #%% For Joints
 # Import packages
 import pyrosim.pyrosim as pyrosim
+import random
 
 #%% Generate the body
 def Generate_Body():
@@ -45,23 +46,42 @@ def Generate_Brain():
 
     pyrosim.Start_NeuralNetwork("brain.nndf")   
     
-    #Send sensor neurons
-    pyrosim.Send_Sensor_Neuron(name = 0, linkName = "Torso")   
-    pyrosim.Send_Sensor_Neuron(name = 1, linkName = "BackLeg")
-    pyrosim.Send_Sensor_Neuron(name = 2, linkName = "FrontLeg")
+    # Neurons for loop
+    sensor_neurons = ["Torso", "BackLeg", "FrontLeg"] #Sensor neurons
+    motor_neurons = ["Torso_BackLeg","Torso_FrontLeg"] #Motor neurons
     
-    pyrosim.Send_Motor_Neuron(name = 3, jointName = "Torso_BackLeg")
-    pyrosim.Send_Motor_Neuron(name = 4, jointName = "Torso_FrontLeg")
+    # Iterate over each sensor neuron
+    for sensorName in sensor_neurons:
+        sensorIndex = sensor_neurons.index(sensorName) #Get the index of the sensor
+        pyrosim.Send_Sensor_Neuron(name = sensorIndex, linkName = sensorName) #Create sensor neuron with index and sensorname
+        
+        #Iterate over motor neurons
+        for motorName in motor_neurons:
+            motorIndex = motor_neurons.index(motorName) + 3 #Get index of sensor; +3 because 3 sensor neurons in outer loop
+            pyrosim.Send_Motor_Neuron(name = motorIndex, jointName = motorName)
+            
+            #Assign weights
+            weight = random.uniform(-1,1)
+            pyrosim.Send_Synapse(sourceNeuronName = sensorIndex, targetNeuronName = motorIndex, weight = weight)
+        
+       
+    # #Send sensor neurons
+    # pyrosim.Send_Sensor_Neuron(name = 0, linkName = "Torso")   
+    # pyrosim.Send_Sensor_Neuron(name = 1, linkName = "BackLeg")
+    # pyrosim.Send_Sensor_Neuron(name = 2, linkName = "FrontLeg")
+    
+    # pyrosim.Send_Motor_Neuron(name = 3, jointName = "Torso_BackLeg")
+    # pyrosim.Send_Motor_Neuron(name = 4, jointName = "Torso_FrontLeg")
     
     
-    #Generate a synapse
-    pyrosim.Send_Synapse(sourceNeuronName = 0, targetNeuronName = 3, weight = .5) 
-    #Idk why but weight has to be -1 here, otherwise the robot breaks. :'(
-    pyrosim.Send_Synapse(sourceNeuronName = 1, targetNeuronName = 3, weight = .5)
-    pyrosim.Send_Synapse(sourceNeuronName = 2, targetNeuronName = 3, weight = .5)
-    pyrosim.Send_Synapse(sourceNeuronName = 0, targetNeuronName = 4, weight = .5)
-    pyrosim.Send_Synapse(sourceNeuronName = 1, targetNeuronName = 4, weight = .5)
-    pyrosim.Send_Synapse(sourceNeuronName = 2, targetNeuronName = 4, weight = .5)
+    # #Generate a synapse
+    # pyrosim.Send_Synapse(sourceNeuronName = 0, targetNeuronName = 3, weight = .5) 
+    # #Idk why but weight has to be -1 here, otherwise the robot breaks. :'(
+    # pyrosim.Send_Synapse(sourceNeuronName = 1, targetNeuronName = 3, weight = .5)
+    # pyrosim.Send_Synapse(sourceNeuronName = 2, targetNeuronName = 3, weight = .5)
+    # pyrosim.Send_Synapse(sourceNeuronName = 0, targetNeuronName = 4, weight = .5)
+    # pyrosim.Send_Synapse(sourceNeuronName = 1, targetNeuronName = 4, weight = .5)
+    # pyrosim.Send_Synapse(sourceNeuronName = 2, targetNeuronName = 4, weight = .5)
     
     
     # End Simulation
