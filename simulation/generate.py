@@ -53,6 +53,17 @@ def Generate_Brain():
     pyrosim.Send_Motor_Neuron(name = 3, jointName = "Torso_BackLeg")
     pyrosim.Send_Motor_Neuron(name = 4, jointName = "Torso_FrontLeg")
     
+    
+    #Generate a synapse
+    pyrosim.Send_Synapse(sourceNeuronName = 0, targetNeuronName = 3, weight = .5) 
+    #Idk why but weight has to be -1 here, otherwise the robot breaks. :'(
+    pyrosim.Send_Synapse(sourceNeuronName = 1, targetNeuronName = 3, weight = .5)
+    pyrosim.Send_Synapse(sourceNeuronName = 2, targetNeuronName = 3, weight = .5)
+    pyrosim.Send_Synapse(sourceNeuronName = 0, targetNeuronName = 4, weight = .5)
+    pyrosim.Send_Synapse(sourceNeuronName = 1, targetNeuronName = 4, weight = .5)
+    pyrosim.Send_Synapse(sourceNeuronName = 2, targetNeuronName = 4, weight = .5)
+    
+    
     # End Simulation
     pyrosim.End()
 

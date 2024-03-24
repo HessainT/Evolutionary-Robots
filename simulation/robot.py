@@ -29,6 +29,7 @@ class ROBOT:
         self.Prepare_To_Sense()
         self.Prepare_To_Act()
         
+        #Creates a neural network
         self.nn = NEURAL_NETWORK("brain.nndf")
         
         
@@ -56,7 +57,7 @@ class ROBOT:
 
             #Create an instance of MOTOR class for each link
             self.motors[jointName] = MOTOR(jointName)
-            print(jointName)
+            #print(jointName)
     
     #%% Act function
     def Act(self,step):

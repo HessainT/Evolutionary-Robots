@@ -21,6 +21,9 @@ class NEURON:
         self.Set_Value(0.0)
 
     def Add_To_Value( self, value ):
+        
+        #Convert value to float
+        #value = float(value)
 
         self.Set_Value( self.Get_Value() + value )
 
@@ -126,5 +129,58 @@ class NEURON:
     def Update_Sensor_Neuron(self):
         self.Set_Value(pyrosim.Get_Touch_Sensor_Value_For_Link(self.Get_Link_Name()))
         
-    def Update_Hidden_Or_Motor_Neuron(self):
+    def Update_Hidden_Or_Motor_Neuron(self, neurons, synapses):
+        
+        #Set value to 0
         self.Set_Value(0)
+
+        #Initialize value to 0 for loop
+        self.init_neuron_value = 0
+        
+        #TESTING
+        # #Print current key in synapse?
+        # print(self.Get_Name())
+        # print("\n updating neuron")
+        
+        print("Value before synapse")
+        print(self.Get_Value())
+        
+        # Iterate through keys in synapse
+        for key in synapses:
+            
+            # Check whether current synapse arrives at correct neuron
+            if (key[1] == self.Get_Name()):
+                    
+                # Testing
+                # print(key[0])
+                # print(key[1])
+                # print("pre and post synapse neurons")
+                
+                # Get the presynaptic neuron's name and weight of the synapse
+                self.pre_neuron_name = key[0]                        #Name of neuron
+                self.synapse_weight = synapses[key].Get_Weight()     #Weight of neuron
+    
+                # Get the current value of the presynaptic neuron
+                self.pre_neuron_value = neurons[self.pre_neuron_name].Get_Value()
+                
+                # Call Allow_Presynaptic_Neuron_To_Influence_Me method
+                self.Allow_Presynaptic_Neuron_To_Influence_Me(self.synapse_weight, self.pre_neuron_value)
+        
+        # Sets motor max output to [-1.0,1.0]
+        self.Threshold()
+        print("Value after synapse")
+        print(self.Get_Value())
+        
+    def Allow_Presynaptic_Neuron_To_Influence_Me(self, weight, value):
+        
+        # Print arguments to test
+        print(weight)
+        print("weight")
+        print(value)
+        print("value)")
+        
+        #Calculate outgoing signal and send it out
+        self.output = weight * value
+        
+        #self.output = float(self.output)    #Convert value to float
+        self.Add_To_Value(self.output)        

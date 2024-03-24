@@ -31,7 +31,7 @@ upper_time_bound = 2 * np.pi    # Time = 2pi
 max_force = 25
 
 # Sleep_time (seconds)
-sleep_duration = 1/240
+sleep_duration = 1/2000
 
 #%% BACK leg motor constants
 amplitude = np.pi/8    #Amplitude multiplier
