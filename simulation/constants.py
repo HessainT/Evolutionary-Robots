@@ -21,7 +21,7 @@ grav_y = 0      # y-grav
 grav_z = -9.8   # z-grav !!!
 
 # Total simulation STEPS
-STEPS = 1000
+STEPS = 5000
 
 # Array with time values
 lower_time_bound = 0            # Time = 0
@@ -31,11 +31,13 @@ upper_time_bound = 2 * np.pi    # Time = 2pi
 max_force = 25
 
 # Sleep_time (seconds)
-sleep_duration = 1/2000
+sleep_duration = 1/50000
 
 #%% BACK leg motor constants
 amplitude = np.pi/8    #Amplitude multiplier
 frequency = 15.0       #Frequency multiplier
 phase = 0.0            #Phase offset
 
+#%% Actual evolution stuff
+numberOfGenerations = 10
 

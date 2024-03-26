@@ -79,6 +79,24 @@ class ROBOT:
     def Think(self):
         self.nn.Update()    #Update sensor neurons with latest data
         self.nn.Print()     #Print current neuron values
+        
+    #%% Get Fitness function
+    def Get_Fitness(self):
+        
+        #Retrieve state of link zero
+        self.stateOfLinkZero = p.getLinkState(self.robotId,0)
+        
+        #Extract position of link zero from state
+        self.positionOfLinkZero = self.stateOfLinkZero[0]
+        
+        #Extract x position of link zero from position
+        self.xCoordinateOfLinkZero = self.positionOfLinkZero[0]
+        
+        # Write xcoord to external file
+        with open("fitness.txt", "w") as file:
+            file.write(str(self.xCoordinateOfLinkZero))
+        
 
+        
 
         

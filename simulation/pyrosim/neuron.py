@@ -136,14 +136,9 @@ class NEURON:
 
         #Initialize value to 0 for loop
         self.init_neuron_value = 0
-        
-        #TESTING
-        # #Print current key in synapse?
-        # print(self.Get_Name())
-        # print("\n updating neuron")
-        
-        print("Value before synapse")
-        print(self.Get_Value())
+         
+        # print("Value before synapse")
+        # print(self.Get_Value())
         
         # Iterate through keys in synapse
         for key in synapses:
@@ -168,16 +163,17 @@ class NEURON:
         
         # Sets motor max output to [-1.0,1.0]
         self.Threshold()
-        print("Value after synapse")
-        print(self.Get_Value())
+        
+        # print("Value after synapse")
+        # print(self.Get_Value())
         
     def Allow_Presynaptic_Neuron_To_Influence_Me(self, weight, value):
         
-        # Print arguments to test
-        print(weight)
-        print("weight")
-        print(value)
-        print("value)")
+        # # Print arguments to test
+        # print(weight)
+        # print("weight")
+        # print(value)
+        # print("value)")
         
         #Calculate outgoing signal and send it out
         self.output = weight * value

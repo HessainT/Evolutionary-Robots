@@ -20,9 +20,15 @@ import constants as c
 
 #%% Class definition
 class SIMULATION:
-    def __init__(self):
+    def __init__(self,mode):
         # Create an object to handle and draw results to GUI
-        self.physicsClient = p.connect(p.GUI)
+        if mode == "DIRECT":
+            self.physicsClient = p.connect(p.DIRECT)
+        elif mode == "GUI":
+            self.physicsClient = p.connect(p.GUI)
+        
+        
+        #self.physicsClient = p.connect(p.DIRECT)
         p.setAdditionalSearchPath(pybullet_data.getDataPath())
 
         # OPTIONAL: Disable sidebars
@@ -53,13 +59,18 @@ class SIMULATION:
              # print("1")
              
          # Save sensor values
-         for sensor_name, sensor in self.robot.sensors.items():
-             sensor.Save_Values("sensor_values_" + sensor_name + ".npy")
+         # for sensor_name, sensor in self.robot.sensors.items():
+         #     sensor.Save_Values("sensor_values_" + sensor_name + ".npy")
 
-         # Save motor values
-         for joint_name, motor in self.robot.motors.items():
-            motor.Save_Values("motor_values_" + joint_name + ".npy")
+         # # Save motor values
+         # for joint_name, motor in self.robot.motors.items():
+         #    motor.Save_Values("motor_values_" + joint_name + ".npy")
      #%% Deconstructor class
     def __del__(self):
         p.disconnect()
+        
+    #%% Get_Fitness function
+    def Get_Fitness(self):
+        # Fetch info about robot's final state
+        self.robot.Get_Fitness()
         

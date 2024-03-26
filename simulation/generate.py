@@ -17,9 +17,6 @@ def Generate_Body():
     # Give pyrosim name of file that stores information about world
     pyrosim.Start_SDF("world.sdf")
     
-    # Create single link at origin
-    #pyrosim.Send_Cube(name = "Block", pos=[-2,2,.5], size=[1,1,1]) #Any size
-    
     # End simulation
     pyrosim.End()
 
