@@ -32,12 +32,14 @@ max_force = 25
 
 # Sleep_time (seconds)
 sleep_duration = 1/50000
+alt_sleep = 1/10000         #For use with GUI visual
 
 #%% BACK leg motor constants
 amplitude = np.pi/8    #Amplitude multiplier
 frequency = 15.0       #Frequency multiplier
 phase = 0.0            #Phase offset
 
-#%% Actual evolution stuff
+#%% Hillclimber and Parallel HillClimber stuff
 numberOfGenerations = 10
+populationSize = 10
 

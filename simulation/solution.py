@@ -10,10 +10,14 @@ import numpy as np
 import pyrosim.pyrosim as pyrosim
 import random
 import os
+import time
 
 #%% Solution Class
 class SOLUTION:
-    def __init__(self):
+    def __init__(self, myID):
+        
+        #Assign ID number for use
+        self.myID = myID
         
         #Create 3x2 matix w/ random weights in range [0,1]
         self.random_weights = np.random.rand(3,2)
@@ -23,8 +27,44 @@ class SOLUTION:
         self.weights = (self.random_weights * 2) -1
         #print("Random weights (after scaling): ", self.weights)
         
-    #%% Evaluate method
-    def Evaluate(self, mode):
+    # #%% Evaluate method
+    # def Evaluate(self, mode):
+    #     # Call functions to generate both world and robot(brain,body)
+    #     self.Create_World()
+    #     self.Create_Body()
+    #     self.Create_Brain()
+        
+    #     # Run the file
+    #     if mode =="DIRECT":
+    #         #print("python3 simulate.py DIRECT & " + str(self.myID))
+    #         os.system("python3 simulate.py DIRECT " + str(self.myID) + " &")
+    #         #os.system("python3 simulate.py DIRECT &")
+    #     elif mode == "GUI":
+    #         #print("python3 simulate.py GUI & " + str(self.myID))
+    #         os.system("python3 simulate.py GUI " + str(self.myID) + " &")
+    #         #os.system("python3 simulate.py GUI &")
+    #     else:
+    #         raise ValueError("Invalid mode. Use 'DIRECT' or 'GUI'.")
+  
+        
+    #     fitnessFileName = "fitness" + str(self.myID) + ".txt"
+    #     #Sleep for a bit if file doesn't exist
+    #     while not os.path.exists(fitnessFileName):
+    #         time.sleep(0.01)
+            
+    #     # Read fitness value from fitness.txt        
+    #     with open("fitness" + str(self.myID) + ".txt","r") as fitnessFile:
+                        
+    #         #Get fitness value from file
+    #         fitness_string = fitnessFile.readline().strip()     #Strip line
+    #         self.fitness = float(fitness_string)                #Load in fitness into local variable
+    #         print(self.fitness)
+        
+    #     #Close fitness.txt
+    #     fitnessFile.close()
+        
+    #%% Start simulation
+    def Start_Simulation(self,mode):
         # Call functions to generate both world and robot(brain,body)
         self.Create_World()
         self.Create_Body()
@@ -32,21 +72,36 @@ class SOLUTION:
         
         # Run the file
         if mode =="DIRECT":
-            os.system("python3 simulate.py DIRECT")
+            #print("python3 simulate.py DIRECT & " + str(self.myID))
+            os.system("python3 simulate.py DIRECT " + str(self.myID) + " &")
+            #os.system("python3 simulate.py DIRECT &")
         elif mode == "GUI":
-            os.system("python3 simulate.py GUI")
+            #print("python3 simulate.py GUI & " + str(self.myID))
+            os.system("python3 simulate.py GUI " + str(self.myID) + " &")
+            #os.system("python3 simulate.py GUI &")
         else:
             raise ValueError("Invalid mode. Use 'DIRECT' or 'GUI'.")
-        
-        # Read fitness value from fitness.txt
-        with open("fitness.txt","r") as fitnessFile:
-            fitness_string = fitnessFile.readline().strip()
-            self.fitness = float(fitness_string)
+            
+    #%% Wait for simulation to end
+    def Wait_For_Simulation_To_End(self):
+        # Create string to feed into os.path
+        fitnessFileName = "fitness" + str(self.myID) + ".txt"
+        #Sleep for a bit if file doesn't exist
+        while not os.path.exists(fitnessFileName):
+            time.sleep(0.01)
+            
+        # Read fitness value from fitness.txt        
+        with open("fitness" + str(self.myID) + ".txt","r") as fitnessFile:
+                        
+            #Get fitness value from file
+            fitness_string = fitnessFile.readline().strip()     #Strip line
+            self.fitness = float(fitness_string)                #Load in fitness into local variable
         
         #Close fitness.txt
         fitnessFile.close()
         
-        
+        #Delete file
+        os.system("rm " + fitnessFileName)
         
     #%% Create World
     def Create_World(self):
@@ -77,7 +132,9 @@ class SOLUTION:
         
     #%% Create Brain
     def Create_Brain(self):
-        pyrosim.Start_NeuralNetwork("brain.nndf")   
+        #Create unique filename for each brain
+        brain_id = "brain{}.nndf".format(self.myID)
+        pyrosim.Start_NeuralNetwork(brain_id)   #Use unique filename to start neural network
         
         # Neurons for loop
         self.sensor_neurons = ["Torso", "BackLeg", "FrontLeg"] #Sensor neurons
@@ -110,7 +167,10 @@ class SOLUTION:
         # Update random neuron with new, mutated weight
         self.weights[randomRow, randomColumn] = random.random() * 2 -1
         
-        
+    #%% Set new ID method
+    def Set_ID(self, myID):
+        # Assign argument ID to local space
+        self.myID = myID
         
         
         

@@ -3,19 +3,17 @@
 """
 Created on Sun Mar 24 13:53:21 2024
 
-For Random Search
 """
 #%% Imports
 import os
-from hillclimber import HILL_CLIMBER
+from parallelHillClimber import PARALLEL_HILL_CLIMBER
 
 #%% Main code chunk
-hc = HILL_CLIMBER()     #Create a Hill Climber object
-hc.Evolve()        #Call evolve function from hillclimber
-print("Showing best now")
-hc.Show_Best()      #Show the best from generation
+phc = PARALLEL_HILL_CLIMBER()     #Create a Hill Climber object
+phc.Evolve()        #Call evolve function from hillclimber
 
-
+#print("Showing best now")
+phc.Show_Best()      #Show the best from generation
 
 
 # for i in range(5):

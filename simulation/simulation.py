@@ -20,11 +20,15 @@ import constants as c
 
 #%% Class definition
 class SIMULATION:
-    def __init__(self,mode):
+    def __init__(self, mode, solutionID):
+        # Store mode locally in new variable
+        self.directOrGUI = mode
+        self.solutionID = solutionID
+        
         # Create an object to handle and draw results to GUI
-        if mode == "DIRECT":
+        if self.directOrGUI == "DIRECT":
             self.physicsClient = p.connect(p.DIRECT)
-        elif mode == "GUI":
+        elif self.directOrGUI == "GUI":
             self.physicsClient = p.connect(p.GUI)
         
         
@@ -37,7 +41,7 @@ class SIMULATION:
         p.setGravity(c.grav_x, c.grav_y, c.grav_z)
         
         self.world = WORLD()    #Create an instance of WORLD() class
-        self.robot = ROBOT()    #Create an instance of ROBOT() class
+        self.robot = ROBOT(solutionID)    #Create an instance of ROBOT() class
         
     #%% Run Class
     def Run(self):
@@ -45,6 +49,10 @@ class SIMULATION:
         # # Loop through the action
          for i in range(c.STEPS): 
              p.stepSimulation() # Step
+             if self.directOrGUI == "GUI":
+                 time.sleep(c.alt_sleep)
+             else:
+                 pass
              #Simulated world is "updated"
              
              self.robot.Sense(i)    #Call sense function from robot
