@@ -16,9 +16,12 @@ import os
 class PARALLEL_HILL_CLIMBER:
     def __init__(self):
         
-        #Delete all temporary files
-        os.system("rm brain*.nndf")
-        os.system("rm fitness*.txt")
+        # Check and delete temporary files if they exist
+        if os.path.exists("brain*.nndf"):
+            os.system("rm brain*.nndf")
+
+        if os.path.exists("fitness*.txt"):
+            os.system("rm fitness*.txt")
         
         # Next ID for "waiting" parent
         self.nextAvailableID = 0

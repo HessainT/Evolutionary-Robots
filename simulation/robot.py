@@ -71,8 +71,10 @@ class ROBOT:
             
             #Only return name if neuron is a motor neuron
             if self.nn.Is_Motor_Neuron(neuronName):
-                jointName = self.nn.Get_Motor_Neurons_Joint(neuronName) #Retrieve jointName    
-                desiredAngle = self.nn.Get_Value_Of(neuronName)
+                jointName = self.nn.Get_Motor_Neurons_Joint(neuronName) #Retrieve jointName   
+                
+                desiredAngle = self.nn.Get_Value_Of(neuronName) * c.motorJointRange     #Multiply by constant to overcome local maximums
+                
                 self.motors[jointName].Set_Value(self.robotId,desiredAngle)
                 
                 #print(neuronName, jointName,desiredAngle) #Print name of neuron

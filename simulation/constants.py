@@ -21,7 +21,7 @@ grav_y = 0      # y-grav
 grav_z = -9.8   # z-grav !!!
 
 # Total simulation STEPS
-STEPS = 5000
+STEPS = 1200
 
 # Array with time values
 lower_time_bound = 0            # Time = 0
@@ -31,15 +31,21 @@ upper_time_bound = 2 * np.pi    # Time = 2pi
 max_force = 25
 
 # Sleep_time (seconds)
-sleep_duration = 1/50000
-alt_sleep = 1/10000         #For use with GUI visual
+sleep_duration = 1/10000
+alt_sleep = 1/2000   #For use with GUI visual
 
-#%% BACK leg motor constants
+#%% Motor constants
 amplitude = np.pi/8    #Amplitude multiplier
 frequency = 15.0       #Frequency multiplier
 phase = 0.0            #Phase offset
+motorJointRange = 0.2     #Set range for motors
 
 #%% Hillclimber and Parallel HillClimber stuff
-numberOfGenerations = 10
-populationSize = 10
+numberOfGenerations = 24
+populationSize = 12
 
+#%% Neurons
+# Set these values to 9,8 to use all the limbs of the quadruped
+# Set values to 4,4 for just the feet
+numSensorNeurons = 9
+numMotorNeurons = 8
